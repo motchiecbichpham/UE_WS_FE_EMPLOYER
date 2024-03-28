@@ -1,0 +1,12 @@
+<mat-card class="home-head-card">
+  <mat-card-content>
+    <h2>Welcome to Your Dashboard, {{ companyName }}</h2>
+    <p>Date: {{ currentDate }}</p>
+    <p>Number of New Applications Today: {{ newApplicationsCount }}</p>
+    <button mat-raised-button color="primary" routerLink="/job-post">Create Job</button>
+  </mat-card-content>
+</mat-card>
+<div class="job-list">
+  <app-job-card *ngFor="let job of jobs" [job]="job"></app-job-card>
+</div>
+

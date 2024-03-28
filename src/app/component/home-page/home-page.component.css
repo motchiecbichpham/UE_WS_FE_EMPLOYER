@@ -1,0 +1,16 @@
+.home-head-card {
+  margin: 20px 32px;
+}
+.job-list {
+  margin: 20px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-around; */
+  align-items: flex-start;
+}
+mat-card-content {
+  text-align: center;
+}
+app-job-card{
+  margin-right: 16px;
+}

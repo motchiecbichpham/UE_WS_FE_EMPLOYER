@@ -1,0 +1,22 @@
+.job-card {
+  min-width: 360px;
+  margin: 20px auto;
+}
+
+
+.job-modify-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: 0px;
+  background-color: white;
+}
+
+mat-card-header{
+  justify-content: flex-start;
+  align-items: center;
+}
+
+mat-card-subtitle {
+  text-decoration: underline;
+}
