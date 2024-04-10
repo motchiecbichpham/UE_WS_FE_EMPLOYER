@@ -1,16 +1,42 @@
-.home-head-card {
-  margin: 20px 32px;
-}
 .job-list {
-  margin: 20px 32px;
+  margin: 20px 8px;
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-around; */
+  justify-content: space-around;
   align-items: flex-start;
 }
 mat-card-content {
   text-align: center;
 }
-app-job-card{
-  margin-right: 16px;
+app-job-card {
+  margin-right: 4px;
+  margin-left: 4px;
+}
+.banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  align-self: center;
+}
+
+.banner-content {
+  position: absolute;
+  top: 70%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 24px;
+  text-align: center;
+}
+button {
+  height: 48px;
+  width: 160px;
 }

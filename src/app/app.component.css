@@ -1,0 +1,61 @@
+.spacer {
+  flex: 1;
+}
+mat-card-actions {
+  display:flex;
+}
+mat-card-actions button {
+  flex: 1;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  height: 48px;
+}
+
+mat-card-actions button:first-child {
+  margin-right: 16px;
+}
+
+mat-card-actions button:nth-child(1) {
+  color: #fff;
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+mat-card-actions button:nth-child(2) {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+mat-card-title{
+  color: var(--primary);
+}
+.cancelled-text {
+  background-color: red;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.open-text {
+  background-color: green;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.closed-text {
+  background-color: grey;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+mat-card-title,
+mat-card-subtitle {
+  max-height: calc(1.5em * 2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  align-self: flex-start;
+}
+

@@ -1,38 +1,83 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
+import { JobService } from '../../service/job.service';
+import { Job, JobContractType } from '../../type/job';
+import { AuthService } from '../../service/auth.service';
+import { Router } from '@angular/router';
+import { Company } from '../../type/company';
+import { NotificationService } from '../../service/notification.service';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
-export class HomePageComponent {
-  companyName = 'Your Company Name';
-  currentDate: string;
-  newApplicationsCount = 5;
-  jobs = [
-    {
-      id: 1,
-      title: 'Software Engineer',
-      location: 'New York',
-      postedDate: new Date('2024-03-29'),
-      applications: [
-        { id: 1, name: 'John Doe' },
-        { id: 2, name: 'Jane Smith' },
-      ],
+export class HomePageComponent implements OnInit {
+  jobs: Job[] = [];
+  dataJobs: Job[] = [];
+  nullJob: Job = {
+    company: {
+      id: undefined,
+      name: '',
+      contact: '',
+      address: '',
+      city: '',
+      introduction: '',
+      description: '',
+      password: '',
     },
-    {
-      id: 2,
-      title: 'Data Analyst',
-      location: 'San Francisco',
-      postedDate: new Date('2024-03-28'),
-      applications: [
-        { id: 3, name: 'Alice Johnson' },
-        { id: 4, name: 'Bob Brown' },
-      ],
-    },
-  ];
-
-  constructor() {
-    this.currentDate = formatDate(new Date(), 'mediumDate', 'en-US'); // Format current date
+    title: '',
+    description: '',
+    salary: 0,
+    workplace: '',
+    yearOfExp: 0,
+    contract: JobContractType.FullTime,
+    expiredDate: new Date(),
+    status: '',
+    amountHiring: 0,
+    id: -1,
+  };
+  constructor(
+    private jobService: JobService,
+    private router: Router,
+    private notiService: NotificationService
+  ) {
+  }
+  ngOnInit(): void {
+    const profile = localStorage.getItem('companyProfile');
+    const profileCompany: Company = profile ? JSON.parse(profile) : null;
+    if (profileCompany.id) {
+      this.jobService.getJobs(profileCompany.id).subscribe(
+        (data) => {
+          this.jobs = data;
+          this.dataJobs = data;
+          this.setNumberOfItems(window.innerWidth, this.dataJobs);
+        },
+        (error) => {
+          this.notiService.showNotification('Load jobs failed', 'Close');
+        }
+      );
+    }
+  }
+  viewJob(id: number) {
+    this.router.navigate(['/job-detail', id]);
+  }
+  setNumberOfItems(width: number, listJ: Job[]): void {
+    if (width < 968) {
+      this.jobs = listJ;
+    } else if (width >= 968 && width < 1432) {
+      if (listJ.length % 2 == 1) {
+        this.jobs = [...listJ, this.nullJob];
+      }
+    } else {
+      if (listJ.length % 3 == 1) {
+        this.jobs = [...listJ, this.nullJob, this.nullJob];
+      } else if (listJ.length % 3 == 2) {
+        this.jobs = [...listJ, this.nullJob];
+      }
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.setNumberOfItems(event.target.innerWidth, this.dataJobs);
   }
 }

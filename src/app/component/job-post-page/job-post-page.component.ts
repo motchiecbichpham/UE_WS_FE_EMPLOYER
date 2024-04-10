@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { JobService } from '../../service/job.service';
+import { Job, JobContractType, JobHiringStatus } from '../../type/job';
+import { Company } from '../../type/company';
+import { CONSTANT } from '../../api/constants';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-job-post-page',
@@ -7,6 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './job-post-page.component.css',
 })
 export class JobPostPageComponent {
+  workplaces = CONSTANT.cities;
+  minDate: Date;
   jobForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
@@ -17,23 +25,80 @@ export class JobPostPageComponent {
     expiredDate: ['', Validators.required],
     status: ['', Validators.required],
     amountHiring: ['', Validators.required],
+    company: [{ id: '' }],
+    id: [null],
   });
-  constructor(private fb: FormBuilder) {}
+  contractTypes = this.getTitles(JobContractType);
+  statusHring = this.getTitles(JobHiringStatus);
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private jobService: JobService,
+    private route: ActivatedRoute,
+    private notiService: NotificationService
+  ) {
+    this.minDate = new Date();
+  }
+  id = null;
 
-  ngOnInit(): void {}
-
-  get f() {
-    return this.jobForm.controls;
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.id = params['id'];
+      if (this.id) {
+        this.jobService.getJob(this.id).subscribe(
+          (data) => {
+            this.jobForm.setValue(data);
+          },
+          (error) => {
+            this.notiService.showNotification('Load job failed', 'Close');
+          }
+        );
+      }
+    });
   }
 
   onSubmit() {
     if (this.jobForm.invalid) {
       return;
     }
-    // Submit logic here
+    const profile = localStorage.getItem('companyProfile');
+    const profileCompany: Company = profile ? JSON.parse(profile) : null;
+    this.jobForm.value.company = profileCompany;
+    if (this.id) {
+      this.updateJob(this.id);
+    } else {
+      this.postJob();
+    }
   }
-
-  resetForm() {
-    this.jobForm.reset();
+  postJob() {
+    this.jobService.postJob(this.jobForm.value).subscribe(
+      (response) => {
+        this.router.navigate(['/home']);
+        this.notiService.showNotification('Post job successfully', 'Close');
+      },
+      (error) => {
+        this.notiService.showNotification('Post job failed', 'Close');
+      }
+    );
+  }
+  updateJob(id: number) {
+    this.jobService.updateJob(this.jobForm.value, id).subscribe(
+      (response) => {
+        this.router.navigate(['/home']);
+        this.notiService.showNotification('Update job successfully', 'Close');
+      },
+      (error) => {
+        this.notiService.showNotification('Update job failed', 'Close');
+      }
+    );
+  }
+  getTitles(type: any): string[] {
+    const titles: string[] = [];
+    for (let t in type) {
+      if (isNaN(Number(t))) {
+        titles.push(t);
+      }
+    }
+    return titles;
   }
 }

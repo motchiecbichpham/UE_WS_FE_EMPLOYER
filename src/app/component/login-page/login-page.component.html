@@ -2,18 +2,15 @@
   <mat-card-title>Login</mat-card-title>
   <mat-card-content>
     <form [formGroup]="loginForm" (ngSubmit)="submit()">
-      <p>
         <mat-form-field>
           <input
             type="email"
             matInput
-            placeholder="Email"
-            formControlName="email"
+            placeholder="Enter your company email"
+            formControlName="contact"
           />
         </mat-form-field>
-      </p>
 
-      <p>
         <mat-form-field>
           <input
             type="password"
@@ -22,14 +19,13 @@
             formControlName="password"
           />
         </mat-form-field>
-      </p>
 
       <p *ngIf="error" class="error">
         {{ error }}
       </p>
 
         <button class="button-login" type="submit" mat-button>Login</button>
-        <button class="button-signup" color="primary" type="submit" mat-button>Sign up</button>
+        <button class="button-signup" color="primary" routerLink="/sign-up" mat-button>Sign up</button>
     </form>
   </mat-card-content>
 </mat-card>

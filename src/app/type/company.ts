@@ -3,7 +3,7 @@ export type Company = {
   name: string;
   contact: string;
   address: string;
-  postalCode: string;
+  city: string;
   introduction: string;
   description: string;
   password: string;

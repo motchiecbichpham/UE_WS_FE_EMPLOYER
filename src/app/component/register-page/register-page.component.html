@@ -29,12 +29,9 @@
         />
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          formControlName="postalCode"
-          placeholder="Postal Code (e.g., 12345)"
-          [pattern]="'^[0-9]{5}$'"
-        />
+        <mat-select placeholder="Select a city" formControlName="city">
+          <mat-option  *ngFor="let option of cities" [value]="option">{{ option }}</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field>
         <textarea
@@ -58,10 +55,6 @@
           formControlName="password"
         />
       </mat-form-field>
-
-      <p *ngIf="error" class="error">
-        {{ error }}
-      </p>
       <button class="button" type="submit" mat-button>Sign up</button>
     </form>
   </mat-card-content>

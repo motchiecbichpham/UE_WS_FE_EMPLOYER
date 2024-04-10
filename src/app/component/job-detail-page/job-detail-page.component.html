@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="job-detail-container">
+    <mat-card class="job-company-card">
+      <mat-card-header>
+        <mat-card-title>Job overview</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="job-details">
+        <div>
+          <p><strong>Title:</strong> {{ job?.title }}</p>
+          <p><strong>Hiring Amount:</strong> {{ job?.amountHiring }}</p>
+          <p><strong>Salary:</strong> {{ job?.salary }} €/month</p>
+          <p><strong>Workplace:</strong> {{ job?.workplace }}</p>
+          <p>
+            <strong>Expiration Date:</strong>
+            {{ job?.expiredDate | date : "dd MMMM yyyy" }}
+          </p>
+          <p><strong>Required Experience:</strong> {{ job?.yearOfExp }} year(s)</p>
+          <p>
+            <strong>Job status:</strong>
+            <span
+              [ngClass]="{
+                'cancelled-text': job?.status === 'Cancelled',
+                'open-text': job?.status === 'Open',
+                'closed-text': job?.status === 'Closed'
+              }"
+              >{{ job?.status }}</span
+            >
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="job-company-card">
+      <mat-card-header>
+        <mat-card-title>Description</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="job-desc">
+        <p>{{ job?.description }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="list-application">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>List of Applications</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="application">
+        <div *ngIf="applications.length === 0" class="empty-list-text">
+          No applications found.
+        </div>
+        <div *ngFor="let application of applications" class="application-item">
+          Application {{ application.id }} -
+          {{ application.candidate.firstName }}
+          <button mat-raised-button (click)="downloadCV(application)">
+            Download CV
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

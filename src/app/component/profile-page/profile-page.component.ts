@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Company } from '../../type/company';
+import { CONSTANT } from '../../api/constants';
+import { AuthService } from '../../service/auth.service';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -7,31 +11,57 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './profile-page.component.css',
 })
 export class ProfilePageComponent implements OnInit {
+  cities = CONSTANT.cities;
+
   profileForm: FormGroup = this.fb.group({
+    id: [null],
     name: ['', Validators.required],
     contact: ['', Validators.required],
     address: ['', Validators.required],
-    postalCode: ['', Validators.required],
+    city: ['', Validators.required],
     introduction: ['', Validators.required],
     description: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {}
-
-  get f() {
-    return this.profileForm.controls;
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private notiService: NotificationService
+  ) {}
+  setFormValues(company: Company) {
+    this.profileForm.setValue(company);
+  }
+  ngOnInit(): void {
+    this.resetForm()
   }
 
   onSubmit() {
     if (this.profileForm.invalid) {
       return;
     }
-    // Submit logic here
+    this.updateProfile();
   }
 
+  updateProfile() {
+    this.authService.updateCompany(this.profileForm.value).subscribe(
+      (response) => {
+        this.notiService.showNotification(
+          'Company updated successfully',
+          'Close'
+        );
+        localStorage.setItem('companyProfile', JSON.stringify(response));
+      },
+      (error) => {
+        this.notiService.showNotification(
+          'Update failed',
+          'Close'
+        );
+      }
+    );
+  }
   resetForm() {
-    this.profileForm.reset();
+    const profile = localStorage.getItem('companyProfile');
+    const profileCompany: Company = profile ? JSON.parse(profile) : null;
+    this.setFormValues(profileCompany);
   }
 }

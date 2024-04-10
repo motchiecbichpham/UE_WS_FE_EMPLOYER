@@ -1,4 +1,17 @@
 import { Company } from './company';
+export enum JobContractType {
+  FullTime,
+  PartTime,
+  Temporary,
+  Freelance,
+  Internship,
+}
+
+export enum JobHiringStatus {
+  Open,
+  Closed,
+  Cancelled,
+}
 
 export type Job = {
   company: Company;
@@ -7,8 +20,9 @@ export type Job = {
   salary: number;
   workplace: string;
   yearOfExp: number;
-  contract: string;
+  contract: JobContractType;
   expiredDate: Date;
-  status: number;
+  status: string;
   amountHiring: number;
+  id: number;
 };

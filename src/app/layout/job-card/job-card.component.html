@@ -1,14 +1,33 @@
-<mat-card class="job-card">
+<mat-card *ngIf="job?.id == -1" class="job-card">
+</mat-card>
+<mat-card *ngIf="job?.id !== -1"  class="job-card">
   <mat-card-header>
-    <mat-card-title>{{ job.title }}</mat-card-title>
-    <mat-card-subtitle>Location: {{ job.location }}</mat-card-subtitle>
-    <button class="job-modify-icon">
-      <mat-icon>more_horiz</mat-icon>
-    </button>
+    <mat-card-title>{{ job?.title }}</mat-card-title>
+    <mat-card-subtitle>Location: {{ job?.workplace }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>Posted Date: {{ job.postedDate | date : "medium" }}</p>
-    <p>Number of Applications: {{ job.applications.length }}</p>
-    <p>Job ID: {{ job.id }}</p>
+    <p>Expired Date: {{ job?.expiredDate | date : "dd MMMM yyyy" }}</p>
+    <p>Amount hiring: {{ job?.amountHiring }}</p>
+    <p>Job contract: {{ job?.contract }}</p>
+    <p>
+      Job status:
+      <span
+        [ngClass]="{
+          'cancelled-text': job?.status === 'Cancelled',
+          'open-text': job?.status === 'Open',
+          'closed-text': job?.status === 'Closed'
+        }"
+        >{{ job?.status }}</span
+      >
+    </p>
   </mat-card-content>
+  <div class="update">
+    <button
+      class="update-button"
+      mat-raised-button
+      [routerLink]="['/job-update', job?.id]"
+    >
+      Update job
+    </button>
+  </div>
 </mat-card>

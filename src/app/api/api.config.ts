@@ -1,11 +1,16 @@
-// api.config.ts
+import { environment } from '../../environments/environment.development';
+
 export const API_ENDPOINTS = {
   auth: {
-    login: '/api/auth/login',
-    signup: '/api/auth/signup',
+    signup: environment.apiUrl + '/sign-up',
+    login: environment.apiUrl + '/login',
+    getCompany: environment.apiUrl + '/',
   },
   job: {
-    getAllJobs: '/api/jobs',
-    getJobById: (id: number) => `/api/jobs/${id}`,
+    postJob: environment.apiUrl + '/create-job',
+    getJob: environment.apiUrl + '/job/',
+    getJobs: environment.apiUrl + '/job',
+    getApplications: environment.apiUrl + '/application',
+    getResumeByApplication: environment.apiUrl+'/file-application/'
   },
 };

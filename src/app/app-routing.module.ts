@@ -5,6 +5,7 @@ import { RegisterPageComponent } from './component/register-page/register-page.c
 import { HomePageComponent } from './component/home-page/home-page.component';
 import { ProfilePageComponent } from './component/profile-page/profile-page.component';
 import { JobPostPageComponent } from './component/job-post-page/job-post-page.component';
+import { JobDetailPageComponent } from './component/job-detail-page/job-detail-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,6 +14,8 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent },
   { path: 'profile', component: ProfilePageComponent },
   { path: 'job-post', component: JobPostPageComponent },
+  { path: 'job-update/:id', component: JobPostPageComponent },
+  { path: 'job-detail/:id', component: JobDetailPageComponent },
 ];
 
 @NgModule({

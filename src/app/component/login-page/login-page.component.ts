@@ -1,23 +1,57 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
 })
-export class LoginPageComponent {
-  loginForm = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', Validators.required),
-  });
+export class LoginPageComponent implements OnInit {
+  ngOnInit(): void {
+    localStorage.setItem('token', '');
+    localStorage.setItem('companyProfile', '');
+  }
 
+  loginForm: FormGroup = this.fb.group({
+    contact: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+  });
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private notiService: NotificationService,
+  ) {}
   submit() {
-    if (this.loginForm.valid) {
-      this.submitEM.emit(this.loginForm.value);
+    if (this.loginForm.invalid) {
+      return;
     }
+    this.login();
   }
   @Input() error: string | null | undefined;
 
-  @Output() submitEM = new EventEmitter();
+  login() {
+    this.authService.login(this.loginForm.value).subscribe(
+      (response) => {
+        this.notiService.showNotification('Login successfully', 'Close');
+        localStorage.setItem('token', response.token);
+        localStorage.setItem(
+          'companyProfile',
+          JSON.stringify(response.company)
+        );
+        this.router.navigate(['/home']);
+      },
+      (error) => {
+        this.notiService.showNotification('Login failed', 'Close');
+      }
+    );
+  }
 }

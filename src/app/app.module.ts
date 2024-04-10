@@ -12,7 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './component/profile-page/profile-page.component';
 import { JobPostPageComponent } from './component/job-post-page/job-post-page.component';
 import { JobCardComponent } from './layout/job-card/job-card.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JobDetailPageComponent } from './component/job-detail-page/job-detail-page.component';
+import { AppInterceptorService } from './service/app-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     ProfilePageComponent,
     JobPostPageComponent,
     JobCardComponent,
+    JobDetailPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,14 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [provideAnimationsAsync()],
+  providers: [
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
