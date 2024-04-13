@@ -23,20 +23,29 @@ export class JobDetailPageComponent implements OnInit {
       const id = params['id'];
       this.jobService.getJob(id).subscribe(
         (data) => {
-          this.job = data;
+          if (data) {
+            this.job = data;
+          }
         },
         (error) => {
-          this.notiService.showNotification('Load job failed', 'Close');
+          this.notiService.showNotification(
+            error.error.message,
+            'Close',
+            false
+          );
         }
       );
       this.jobService.getApplications(id).subscribe(
         (data) => {
-          this.applications = data;
+          if (data) {
+            this.applications = data;
+          }
         },
         (error) => {
           this.notiService.showNotification(
-            'Load applications failed',
-            'Close'
+            error.error.message,
+            'Close',
+            false
           );
         }
       );
@@ -51,7 +60,7 @@ export class JobDetailPageComponent implements OnInit {
         link.click();
       },
       (error) => {
-        this.notiService.showNotification('Download resume failed', 'Close');
+        this.notiService.showNotification(error.error.message, 'Close', false);
       }
     );
   }

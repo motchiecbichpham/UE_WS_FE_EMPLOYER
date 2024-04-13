@@ -26,6 +26,7 @@ export class JobPostPageComponent {
     status: ['', Validators.required],
     amountHiring: ['', Validators.required],
     company: [{ id: '' }],
+    createdDate:[null],
     id: [null],
   });
   contractTypes = this.getTitles(JobContractType);
@@ -50,7 +51,11 @@ export class JobPostPageComponent {
             this.jobForm.setValue(data);
           },
           (error) => {
-            this.notiService.showNotification('Load job failed', 'Close');
+            this.notiService.showNotification(
+              error.error.message,
+              'Close',
+              false
+            );
           }
         );
       }
@@ -77,7 +82,7 @@ export class JobPostPageComponent {
         this.notiService.showNotification('Post job successfully', 'Close');
       },
       (error) => {
-        this.notiService.showNotification('Post job failed', 'Close');
+        this.notiService.showNotification(error.error.message, 'Close', false);
       }
     );
   }
@@ -88,7 +93,7 @@ export class JobPostPageComponent {
         this.notiService.showNotification('Update job successfully', 'Close');
       },
       (error) => {
-        this.notiService.showNotification('Update job failed', 'Close');
+        this.notiService.showNotification(error.error.message, 'Close', false);
       }
     );
   }

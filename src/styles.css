@@ -1,19 +1,25 @@
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 :root {
   --primary: #009688;
 }
-.green-snackbar {
-  background-color: green;
+
+.success-snackbar {
+  --mdc-snackbar-container-color: green;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+  white-space: pre-wrap;
 }
-
-.green-snackbar .mat-snack-bar-container {
-  color: white;
+.error-snackbar {
+  --mdc-snackbar-container-color: red;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+  white-space: pre-wrap;
 }
-
-.green-snackbar .mat-snack-bar-container button {
-  background-color: white;
-  color: green;
-}
-
-

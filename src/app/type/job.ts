@@ -20,9 +20,10 @@ export type Job = {
   salary: number;
   workplace: string;
   yearOfExp: number;
-  contract: JobContractType;
+  contract: string;
   expiredDate: Date;
   status: string;
+  createdDate?: Date;
   amountHiring: number;
   id: number;
 };

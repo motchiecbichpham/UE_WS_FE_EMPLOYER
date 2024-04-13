@@ -48,6 +48,7 @@ mat-card-title{
   padding: 4px 8px;
   border-radius: 4px;
 }
+
 mat-card-title,
 mat-card-subtitle {
   max-height: calc(1.5em * 2);
@@ -58,4 +59,10 @@ mat-card-subtitle {
   -webkit-line-clamp: 1;
   align-self: flex-start;
 }
-
+.page-not-found {
+  padding: 48px;
+  color: #666;
+  font-size: 24px;
+  justify-content: center;
+  display: flex
+}

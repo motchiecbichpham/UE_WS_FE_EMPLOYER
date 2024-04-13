@@ -11,6 +11,9 @@
   </div>
 </div>
 <div class="job-list">
+  <div *ngIf="jobs.length === 0" class="empty-list-text">
+    No job available. Post your first job
+  </div>
   <app-job-card
     (click)="viewJob(job.id)"
     *ngFor="let job of jobs"

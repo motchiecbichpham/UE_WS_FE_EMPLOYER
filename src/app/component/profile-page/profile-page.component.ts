@@ -32,7 +32,7 @@ export class ProfilePageComponent implements OnInit {
     this.profileForm.setValue(company);
   }
   ngOnInit(): void {
-    this.resetForm()
+    this.resetForm();
   }
 
   onSubmit() {
@@ -45,17 +45,15 @@ export class ProfilePageComponent implements OnInit {
   updateProfile() {
     this.authService.updateCompany(this.profileForm.value).subscribe(
       (response) => {
+
         this.notiService.showNotification(
-          'Company updated successfully',
+          'Update successfully',
           'Close'
         );
         localStorage.setItem('companyProfile', JSON.stringify(response));
       },
       (error) => {
-        this.notiService.showNotification(
-          'Update failed',
-          'Close'
-        );
+        this.notiService.showNotification(error.error.message, 'Close', false);
       }
     );
   }

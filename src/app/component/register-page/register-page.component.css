@@ -1,8 +1,4 @@
-:host {
-  display: flex;
-  justify-content: center;
-  margin: 32px 0px;
-}
+
 mat-form-field {
   width: 100%;
   min-width: 320px;
@@ -42,3 +38,24 @@ mat-card-content {
   color: white;
 }
 
+.banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  align-self: center;
+}
+
+.banner-content {
+  position: absolute;
+  top: 40%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  color: var(--primary);
+}

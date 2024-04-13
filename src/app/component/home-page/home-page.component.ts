@@ -30,7 +30,7 @@ export class HomePageComponent implements OnInit {
     salary: 0,
     workplace: '',
     yearOfExp: 0,
-    contract: JobContractType.FullTime,
+    contract: '',
     expiredDate: new Date(),
     status: '',
     amountHiring: 0,
@@ -40,20 +40,25 @@ export class HomePageComponent implements OnInit {
     private jobService: JobService,
     private router: Router,
     private notiService: NotificationService
-  ) {
-  }
+  ) {}
   ngOnInit(): void {
     const profile = localStorage.getItem('companyProfile');
     const profileCompany: Company = profile ? JSON.parse(profile) : null;
     if (profileCompany.id) {
       this.jobService.getJobs(profileCompany.id).subscribe(
         (data) => {
-          this.jobs = data;
-          this.dataJobs = data;
-          this.setNumberOfItems(window.innerWidth, this.dataJobs);
+          if (data) {
+            this.jobs = data;
+            this.dataJobs = data;
+            this.setNumberOfItems(window.innerWidth, this.dataJobs);
+          }
         },
         (error) => {
-          this.notiService.showNotification('Load jobs failed', 'Close');
+          this.notiService.showNotification(
+            "Load jobs failed",
+            'Close',
+            false
+          );
         }
       );
     }

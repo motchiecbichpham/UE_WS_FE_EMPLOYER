@@ -1,4 +1,5 @@
-<div class="container">
+<div class="page-not-found" *ngIf="job == null">Page not found</div>
+<div *ngIf="job != null" class="container">
   <div class="job-detail-container">
     <mat-card class="job-company-card">
       <mat-card-header>
@@ -14,7 +15,9 @@
             <strong>Expiration Date:</strong>
             {{ job?.expiredDate | date : "dd MMMM yyyy" }}
           </p>
-          <p><strong>Required Experience:</strong> {{ job?.yearOfExp }} year(s)</p>
+          <p>
+            <strong>Required Experience:</strong> {{ job?.yearOfExp }} year(s)
+          </p>
           <p>
             <strong>Job status:</strong>
             <span

@@ -10,9 +10,9 @@ import { API_ENDPOINTS } from '../api/api.config';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  signup(company: Company): Observable<Company> {
+  signup(response: String): Observable<String> {
     const endpoint = API_ENDPOINTS.auth.signup;
-    return this.http.post<Company>(endpoint, company);
+    return this.http.post<String>(endpoint, response);
   }
   login(company: Company): Observable<{ token: string; company: Company }> {
     const endpoint = API_ENDPOINTS.auth.login;
@@ -30,7 +30,7 @@ export class AuthService {
   }
   updateCompany(company: Company): Observable<Company> {
     const endpoint = API_ENDPOINTS.auth.getCompany + `${company.id}`;
-    return this.http.put<Company>(endpoint, company, {
+    return this.http.patch<Company>(endpoint, company, {
       responseType: 'json',
     });
   }

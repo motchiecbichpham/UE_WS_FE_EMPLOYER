@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
@@ -20,7 +20,6 @@ export class RegisterPageComponent implements OnInit {
     address: ['', Validators.required],
     city: ['', Validators.required],
     introduction: ['', Validators.required],
-    description: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
   constructor(
@@ -48,7 +47,7 @@ export class RegisterPageComponent implements OnInit {
         this.router.navigate(['/login']);
       },
       (error) => {
-        this.notiService.showNotification('Company created failed', 'Close');
+        this.notiService.showNotification(error.error.message, 'Close', false);
       }
     );
   }

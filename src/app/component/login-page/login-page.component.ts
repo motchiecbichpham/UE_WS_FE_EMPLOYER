@@ -28,7 +28,7 @@ export class LoginPageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private notiService: NotificationService,
+    private notiService: NotificationService
   ) {}
   submit() {
     if (this.loginForm.invalid) {
@@ -41,16 +41,16 @@ export class LoginPageComponent implements OnInit {
   login() {
     this.authService.login(this.loginForm.value).subscribe(
       (response) => {
-        this.notiService.showNotification('Login successfully', 'Close');
         localStorage.setItem('token', response.token);
         localStorage.setItem(
           'companyProfile',
           JSON.stringify(response.company)
         );
         this.router.navigate(['/home']);
+        this.notiService.showNotification('Login successfully', 'Close');
       },
       (error) => {
-        this.notiService.showNotification('Login failed', 'Close');
+        this.notiService.showNotification("Login failed", 'Close', false);
       }
     );
   }
