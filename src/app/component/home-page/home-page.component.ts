@@ -44,24 +44,19 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     const profile = localStorage.getItem('companyProfile');
     const profileCompany: Company = profile ? JSON.parse(profile) : null;
-    if (profileCompany.id) {
-      this.jobService.getJobs(profileCompany.id).subscribe(
-        (data) => {
-          if (data) {
-            this.jobs = data;
-            this.dataJobs = data;
-            this.setNumberOfItems(window.innerWidth, this.dataJobs);
-          }
-        },
-        (error) => {
-          this.notiService.showNotification(
-            "Load jobs failed",
-            'Close',
-            false
-          );
+    const id = profileCompany?.id ? profileCompany.id : -1;
+    this.jobService.getJobs(id).subscribe(
+      (data) => {
+        if (data) {
+          this.jobs = data;
+          this.dataJobs = data;
+          this.setNumberOfItems(window.innerWidth, this.dataJobs);
         }
-      );
-    }
+      },
+      (error) => {
+        this.notiService.showNotification('Load jobs failed', 'Close', false);
+      }
+    );
   }
   viewJob(id: number) {
     this.router.navigate(['/job-detail', id]);

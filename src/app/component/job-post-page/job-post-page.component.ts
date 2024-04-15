@@ -26,7 +26,7 @@ export class JobPostPageComponent {
     status: ['', Validators.required],
     amountHiring: ['', Validators.required],
     company: [{ id: '' }],
-    createdDate:[null],
+    createdDate: [null],
     id: [null],
   });
   contractTypes = this.getTitles(JobContractType);
@@ -41,8 +41,13 @@ export class JobPostPageComponent {
     this.minDate = new Date();
   }
   id = null;
-
+  profileCompany: Company | undefined;
   ngOnInit(): void {
+    const profile = localStorage.getItem('companyProfile');
+    this.profileCompany = profile ? JSON.parse(profile) : null;
+    if (this.profileCompany == null) {
+      this.router.navigate(['/login']);
+    }
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       if (this.id) {
@@ -66,9 +71,8 @@ export class JobPostPageComponent {
     if (this.jobForm.invalid) {
       return;
     }
-    const profile = localStorage.getItem('companyProfile');
-    const profileCompany: Company = profile ? JSON.parse(profile) : null;
-    this.jobForm.value.company = profileCompany;
+
+    this.jobForm.value.company = this.profileCompany;
     if (this.id) {
       this.updateJob(this.id);
     } else {

@@ -30,7 +30,7 @@ export class AuthService {
   }
   updateCompany(company: Company): Observable<Company> {
     const endpoint = API_ENDPOINTS.auth.getCompany + `${company.id}`;
-    return this.http.patch<Company>(endpoint, company, {
+    return this.http.put<Company>(endpoint, company, {
       responseType: 'json',
     });
   }

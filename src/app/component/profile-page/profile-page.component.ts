@@ -4,6 +4,7 @@ import { Company } from '../../type/company';
 import { CONSTANT } from '../../api/constants';
 import { AuthService } from '../../service/auth.service';
 import { NotificationService } from '../../service/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
@@ -20,13 +21,14 @@ export class ProfilePageComponent implements OnInit {
     address: ['', Validators.required],
     city: ['', Validators.required],
     introduction: ['', Validators.required],
-    description: ['', Validators.required],
+    description: [''],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private notiService: NotificationService
+    private notiService: NotificationService,
+    private router: Router
   ) {}
   setFormValues(company: Company) {
     this.profileForm.setValue(company);
@@ -45,11 +47,7 @@ export class ProfilePageComponent implements OnInit {
   updateProfile() {
     this.authService.updateCompany(this.profileForm.value).subscribe(
       (response) => {
-
-        this.notiService.showNotification(
-          'Update successfully',
-          'Close'
-        );
+        this.notiService.showNotification('Update successfully', 'Close');
         localStorage.setItem('companyProfile', JSON.stringify(response));
       },
       (error) => {
@@ -60,6 +58,9 @@ export class ProfilePageComponent implements OnInit {
   resetForm() {
     const profile = localStorage.getItem('companyProfile');
     const profileCompany: Company = profile ? JSON.parse(profile) : null;
+    if (profileCompany == null) {
+      this.router.navigate(['/login']);
+    }
     this.setFormValues(profileCompany);
   }
 }
