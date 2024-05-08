@@ -1,9 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { NotificationService } from '../../service/notification.service';
@@ -17,6 +13,7 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('token', '');
     localStorage.setItem('companyProfile', '');
+    console.log('aaa');
   }
 
   loginForm: FormGroup = this.fb.group({
@@ -49,7 +46,7 @@ export class LoginPageComponent implements OnInit {
         this.notiService.showNotification('Login successfully', 'Close');
       },
       (error) => {
-        this.notiService.showNotification("Login failed", 'Close', false);
+        this.notiService.showNotification('Login failed', 'Close', false);
       }
     );
   }
