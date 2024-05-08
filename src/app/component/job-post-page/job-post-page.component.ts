@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JobService } from '../../service/job.service';
-import { Job, JobContractType, JobHiringStatus } from '../../type/job';
+import { JobContractType, JobHiringStatus } from '../../type/job';
 import { Company } from '../../type/company';
 import { CONSTANT } from '../../api/constants';
 import { NotificationService } from '../../service/notification.service';

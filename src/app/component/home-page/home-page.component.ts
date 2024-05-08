@@ -1,8 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { formatDate } from '@angular/common';
 import { JobService } from '../../service/job.service';
-import { Job, JobContractType } from '../../type/job';
-import { AuthService } from '../../service/auth.service';
+import { Job } from '../../type/job';
 import { Router } from '@angular/router';
 import { Company } from '../../type/company';
 import { NotificationService } from '../../service/notification.service';
