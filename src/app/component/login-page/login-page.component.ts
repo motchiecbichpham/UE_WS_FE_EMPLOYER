@@ -13,7 +13,7 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('token', '');
     localStorage.setItem('companyProfile', '');
-    console.log('aaa');
+    console.log('aabgit');
   }
 
   loginForm: FormGroup = this.fb.group({
