@@ -7,26 +7,26 @@
       </mat-card-header>
       <mat-card-content class="job-details">
         <div>
-          <p><strong>Title:</strong> {{ job?.title }}</p>
-          <p><strong>Hiring Amount:</strong> {{ job?.amountHiring }}</p>
-          <p><strong>Salary:</strong> {{ job?.salary }} €/month</p>
-          <p><strong>Workplace:</strong> {{ job?.workplace }}</p>
+          <p><strong>Title:</strong> {{ job.title }}</p>
+          <p><strong>Hiring Amount:</strong> {{ job.amountHiring }}</p>
+          <p><strong>Salary:</strong> {{ job.salary }} €/month</p>
+          <p><strong>Workplace:</strong> {{ job.workplace }}</p>
           <p>
             <strong>Expiration Date:</strong>
-            {{ job?.expiredDate | date : "dd MMMM yyyy" }}
+            {{ job.expiredDate | date : "dd MMMM yyyy" }}
           </p>
           <p>
-            <strong>Required Experience:</strong> {{ job?.yearOfExp }} year(s)
+            <strong>Required Experience:</strong> {{ job.yearOfExp }} year(s)
           </p>
           <p>
             <strong>Job status:</strong>
             <span
               [ngClass]="{
-                'cancelled-text': job?.status === 'Cancelled',
-                'open-text': job?.status === 'Open',
-                'closed-text': job?.status === 'Closed'
+                'cancelled-text': job.status === 'Cancelled',
+                'open-text': job.status === 'Open',
+                'closed-text': job.status === 'Closed'
               }"
-              >{{ job?.status }}</span
+              >{{ job.status }}</span
             >
           </p>
         </div>
@@ -37,7 +37,7 @@
         <mat-card-title>Description</mat-card-title>
       </mat-card-header>
       <mat-card-content class="job-desc">
-        <p>{{ job?.description }}</p>
+        <p>{{ job.description }}</p>
       </mat-card-content>
     </mat-card>
   </div>
