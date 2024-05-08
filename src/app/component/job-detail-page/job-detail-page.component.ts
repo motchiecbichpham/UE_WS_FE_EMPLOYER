@@ -24,13 +24,17 @@ export class JobDetailPageComponent implements OnInit {
       this.jobService.getJob(id).subscribe(
         (data) => {
           if (data) {
+            console.log('l2');
+            console.log('l1');
+
             this.job = data;
           }
         },
         (error) => {
+          console.log('l2');
           this.notiService.showNotification(
             error.error.message,
-            'Close',
+            'Closedddd',
             false
           );
         }
@@ -38,6 +42,7 @@ export class JobDetailPageComponent implements OnInit {
       this.jobService.getApplications(id).subscribe(
         (data) => {
           if (data) {
+            console.log('l3');
             this.applications = data;
           }
         },
